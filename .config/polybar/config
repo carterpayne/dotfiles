@@ -306,7 +306,7 @@ thermal-zone = 0
 warn-temperature = 60
 
 format-prefix = " "
-format = <ramp> <label>
+format = <label>
 format-warn = <ramp> <label-warn>
 
 label = %temperature%

@@ -1,0 +1,3 @@
+URxvt*scrollBar: false
+
+URxvt*font: xft:Monaco:pixelsize=18
