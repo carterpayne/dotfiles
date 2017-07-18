@@ -11,7 +11,7 @@ set list lcs=tab:\|-,trail:•,extends:»,precedes:«,nbsp:␣
 " Theme
 let g:airline_theme='solarized'
 set background=dark
-colorscheme solarized
+" colorscheme solarized
 
 set number " line numbers on
 set scrolloff=5 "scroll offset to 5 lines
@@ -40,8 +40,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'rust-lang/rust.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'leafgarland/typescript-vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Quramy/tsuquyomi'
 call vundle#end()
 " turn filetype back on
 filetype plugin indent on
@@ -61,8 +59,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_rust_checkers = ['rustc']
-let g:tsuquyomi_disable_quickfix = 1
-let g:syntastic_typescript_checkers = ['tsuquyomi']
 
 " enable matchit plugin for more awesome % command
 runtime macros/matchit.vim
@@ -102,4 +98,5 @@ set dir=~/.vim/swap
 noremap <leader>a ggVG " ,a is select all
 
 autocmd BufEnter Jenkinsfile set filetype=groovy
+syntax enable
 
