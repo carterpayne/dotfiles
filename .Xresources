@@ -1,3 +1,6 @@
 URxvt*scrollBar: false
 
-URxvt*font: xft:Monaco:pixelsize=18,xft:EmojiOne\ Color;pixelsize=18,xft:Font\ Awesome:antialias=true;pixelsize=18
+URxvt*font: xft:Monaco:size=16,xft:EmojiOne\ Color;pixelsize=18,xft:Font\ Awesome:antialias=true;pixelsize=18
+URxvt*boldFont:
+URxvt.letterSpace: -1
+
