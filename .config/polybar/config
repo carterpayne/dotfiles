@@ -47,7 +47,7 @@ font-3 = FontAwesome:pixelsize=15
 
 modules-left = i3
 modules-center = 
-modules-right = volume filesystem memory cpu temperature eth date powermenu
+modules-right = volume filesystem memory cpu temperature date wlan powermenu
 
 tray-position = right
 tray-padding = 2

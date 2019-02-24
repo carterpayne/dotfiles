@@ -39,9 +39,9 @@ Plugin 'powerman/vim-plugin-AnsiEsc'
 
 " Theme
 " mac:
-Plugin 'altercation/vim-colors-solarized.git'
+"Plugin 'altercation/vim-colors-solarized.git'
 " arch
-"Plugin 'dylanaraps/wal.vim'
+Plugin 'dylanaraps/wal.vim'
 
 
 " HTML
@@ -52,6 +52,7 @@ Plugin 'neoclide/vim-jsx-improve'
 Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'peitalin/vim-jsx-typescript'
 call vundle#end()
+
 " turn filetype back on
 filetype plugin indent on
 syntax on
@@ -64,9 +65,9 @@ set completeopt=menu,menuone,preview,noselect,noinsert
 " Theme
 let g:airline_theme='solarized'
 "mac
-colorscheme solarized
+" colorscheme solarized
 " linux
-" colorscheme wal
+colorscheme wal
 
 set tabstop=2
 set shiftwidth=2
