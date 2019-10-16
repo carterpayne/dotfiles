@@ -1,3 +1,19 @@
-si() {
-  ssh -i ~/.ssh/tkmaster.pem ec2-user@"$*"
+connps() {
+  psql -h $(getdbendpoint $1-$2) -d $1 -U trendkite
+}
+
+connmysql() {
+  DB="trendkite"
+  if [ "$1" = "dev" ]; then
+    DB="tktest"
+  fi
+  mysql --login-path="$1" --prompt="$1>" -A $DB
+}
+
+getdbendpoint() {
+  aws rds describe-db-instances --db-instance-identifier $1 --output json | jq ".DBInstances[0].Endpoint.Address" | sed 's/"//g'
+}
+
+get_ips() {
+  aws ec2 describe-instances --filters 'Name=tag-value,Values='$1 | jq -r '.Reservations[] | .Instances[] | .NetworkInterfaces[] | .PrivateIpAddresses[] | .PrivateIpAddress'
 }

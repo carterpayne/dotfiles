@@ -1,0 +1,7 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "json"
+  ],
+  "prettier.eslintIntegration": true,
+  "suggest.noselect": false
+}

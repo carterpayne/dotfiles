@@ -1,8 +1,4 @@
-" set runtime path to include vundle
-set runtimepath+=~/.vim/bundle/Vundle.vim
 set runtimepath+=/usr/local/opt/fzf
-
-set laststatus=2 " Always show status line
 
 set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 
@@ -10,28 +6,20 @@ set list lcs=tab:\|-,trail:•,extends:»,precedes:«,nbsp:␣
 
 set number " line numbers on
 set scrolloff=5 "scroll offset to 5 lines
-set hlsearch " highlight search (does not hide until next search)
-set incsearch " search as we type
-set autoread " autoreload on change
 set lazyredraw " should help with performance with macros
 set wildmode=list:longest " suggestions on normal with longest list
-set wildmenu " set suggestions on command with <TAB>
 set background=dark
 
-" Press Space to turn off highlighting and clear any message already
-" displayed.
-:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-
 " download plug if not installed
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin()
 Plug 'editorconfig/editorconfig-vim'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vimwiki/vimwiki'
 Plug 'tpope/vim-surround'
@@ -45,12 +33,12 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 
 " HTML
 Plug 'mattn/emmet-vim'
+Plug 'mhinz/vim-startify'
 
 " React
-Plug 'neoclide/vim-jsx-improve'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/vim-jsx-improve'
+"Plug 'HerringtonDarkholme/yats.vim'
+"Plug 'peitalin/vim-jsx-typescript'
 call plug#end()
 
 "call vundle#begin()
@@ -101,11 +89,11 @@ set expandtab
 
 "let g:airline#extensions#ale#enabled = 1
 "let g:ale_completion_enabled = 1
-let g:ale_sign_column_always = 1
-"let g:ale_typescript_tsserver_use_global = 1
-let g:ale_sign_error = '✕'
-let g:ale_sign_warning = '!'
-let g:ale_fixers = { 'javascript' : ['eslint'] }
+"let g:ale_sign_column_always = 1
+""let g:ale_typescript_tsserver_use_global = 1
+"let g:ale_sign_error = '✕'
+"let g:ale_sign_warning = '!'
+"let g:ale_fixers = { 'javascript' : ['eslint'] }
 
 " use ripgrep
 if executable('rg')
@@ -123,13 +111,17 @@ if executable('fzf')
 endif
 
 " enable matchit plugin for more awesome % command
-runtime macros/matchit.vim
+"runtime macros/matchit.vim
 
 " autoreload vimrc on save
 augroup reload_vimrc " {
   autocmd!
   autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
+
+" Press Space to turn off highlighting and clear any message already
+" displayed.
+:nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
 
 " custom keys/etc
@@ -140,6 +132,18 @@ vm <c-x> "+x
 vm <c-c> "+y
 cno <c-v> <c-r>+
 " exe 'ino <script> <C-V>' paste#paste_cmd['i']
+"
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -147,16 +151,10 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 " set no backup and set swapfile dir to temp
-set nobackup
-set directory=~/.vim/swap
+"set nobackup
+"set directory=~/.vim/swap
 
 noremap <leader>a ggVG " ,a is select all
-
-augroup jenkins_file_types " {
-  autocmd BufEnter Jenkinsfile set filetype=groovy
-augroup END " }
-
-set backspace=indent,eol,start
 
 " lvim wiki
 let main_wiki = {}
@@ -164,7 +162,48 @@ let main_wiki.syntax = 'markdown'
 let main_wiki.path = '~/wiki/'
 let g:vimwiki_list = [main_wiki]
 
+" use netrw like NERDTree
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_browse_split = 2
+let g:netrw_winsize = 25
+
+noremap <C-n> :Vexplore<Enter>
+
+vmap <Leader>f <Plug>(coc-format-selected)
+nmap <Leader>f <Plug>(coc-format-selected)
+
 :autocmd VimResized * wincmd =
+
+" coc maps
+" " Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+"
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 
 "ALE error style

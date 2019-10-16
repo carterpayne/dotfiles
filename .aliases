@@ -1,5 +1,10 @@
-alias cdfe="cd ~/repos/trendkite-front-end"
-alias cdwa="cd ~/repos/trendkite-grails3/webapp/src/main/webapp"
+alias ls='ls -G'
+alias cdfe="cd ~/repos/trendkite/fe"
 alias zshrc="vim ~/.zshrc && source ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias vim=nvim
+alias vimwiki="vim +VimwikiIndex"
+alias sudoedit="sudo -e"
+
+
