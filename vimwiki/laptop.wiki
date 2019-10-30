@@ -9,4 +9,137 @@ are connected
 
 chrony
 
+"
+...
+FONT=sun12x22
+"
+>> /etc/vconsole.conf
+
+Install Steps:
+1. usb
+2. setfont sun12x22
+3. wifi-menu
+4. timedatectl set-ntp true
+5. find disks: lsblk
+6. partition:
+  1. /boot 512MiB
+  2. /swap 16GB
+  3. / rest encrypted w/ LUKS straight on a partition
+  4. parted
+7. encrypt /
+  1. cryptsetup -y -v luksFormat /dev/rootpartion
+  2. cryptsetup open /dev/rootpartition cryptroot
+  3. mkfs.ext4 /dev/mapper/cryptroot
+  4. mount /dev/mapper/cryptroot /mnt
+  5. test:
+    1. umount /mnt
+    2. cryptsetup close cryptroot
+    3. cryptsetup open /dev/slkdjfslkd cryptroot
+    4. mount /dev/mapper/cryptroot /mnt
+8. format boot partition:
+  1. mkfks.fat -F32 /dev/bootpart
+  2. mkdir /mtn/boot
+  3. mount /dev/bootpart /mnt/boot
+9. init swap:
+  1. mkswap /dev/swapdev
+  2. swapon /dev/swapdev (todo: make sure this turns on swap after boot)
+10. push US mirrors to top of /etc/pacman.d/mirrorlist
+11. pacstrap /mnt base linux linux-firmware
+12. genfstab -U /mnt >> /mnt/etc/fstab
+13. TODO: double check discards disabled for nvme
+14. arch-chroot /mnt
+15. ln -sf /usr/share/zoneinfo/US/Central /etc/localtime
+16. hwclock --sysohc
+17. echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+18. locale-gen
+19. echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+20. echo "FONT=sun12x22" >> /etc/vconsole.conf
+21. echo "furiosa" > /etc/hostname
+22. echo -e '127.0.1.1\tfuriosa'
+23. sudo pacman -Syu networkmanager amd-ucode
+24. sudo systemctrl enable NetworkManger.service
+25. add keyboard/encrypt to mkinitcpio.conf:
+  1. HOOKS=(base udev autodetect keyboard consolefont modconf block encrypt filesystems fsck)
+  2. mkinitcpio -p
+26. install bootloader:
+  1. bootctl --path=boot install :
+  2. auto update booter:
+    ```
+    cat <<EOT >> /etc/pacman.d/hooks/100-systemd-boot.hook
+    [Trigger]
+    Type = Package
+    Operation = Upgrade
+    Target = systemd
+
+    [Action]
+    Description = Updating systemd-boot
+    When = PostTransaction
+    Exec = /usr/bin/bootctl update
+    EOT
+    ```
+  3. loader config:
+    ```
+    cat <<EOT >> /boot/loader/loader.conf
+    default	arch
+    timeout	4
+    console-mode	max
+    editor	no
+    EOT
+    ```
+  4. mkdir /boot/loader/entries
+  5. add arch loader
+    ```
+    cat <<EOT >> /boot/loader/entries/arch.conf
+    title Arch Linux
+    linux /vmlinuz-linx
+    initrd /boot/amd-ucode.img
+    initrd /initramfs-linux.img
+    options cryptdevice=<UUID>:cryptroot root=/dev/mapper/cryptroot
+    EOT
+    ```
+27. set root password w/ passwd
+28. reboot
+29. manually set up wifi connection:
+  1. nmcli device wifi list
+  2. nmcli device wifi connect <SSID> password password
+30. useradd -m -G wheel carter
+31. passwd carter
+32. visudo add: %wheel<TAB>ALL=(ALL) ALL
+33. verify carter can sudo
+34. passwd -l root
+35. sudo pacman -Syu git
+36. //login as carter
+37. mkdir aur
+38. cd aur
+39. git clone https://aur.archlinux.org/yay.git
+40. cd yay
+41. makepkg -si
+42. yay -Syu xorg xf86-video-amdgpu mesa lib32-mesa? xf86-input-libinput firefox
+    alacritty fzf gotop htop i3-gaps base-devel neovim polybar rofi python-pywal
+    xclip xdg-utils pulseaudio chrony networkmanager-dispatcher-chrony
+43. add chrony config:
+  ```
+  cat <<EOT >> /etc/chrony.conf
+  server 0.north-america.pool.ntp.org offline
+  server 1.north-america.pool.ntp.org offline
+  server 2.north-america.pool.ntp.org offline
+  server 3.north-america.pool.ntp.org offline
+  EOT
+  ```
+44. sudo systemctl disable systemd-timesyncd.service
+45. sudo systemctl enable chronyd.service
+46. verify monitor detected correctly:
+  1. xdpyinfo | grep -B 2 resolution
+47. echo "Xft.dpi: 180" >> ~/.Xresources
+48. 
+
+TODO: networkmanager passwords in keyring
+TODO: make maintainance doc
+TODO: firewall
+TODO: sound card
+TODO: powermanagement
+TODO: webcam
+TODO: follow fingerprint reader progress
+TODO: HiDPI
+TODO: fwupd
 
