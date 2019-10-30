@@ -1,3 +1,0 @@
-si() {
-  ssh -i ~/.ssh/tkmaster.pem ec2-user@"$*"
-}

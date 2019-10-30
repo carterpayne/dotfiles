@@ -1,0 +1,12 @@
+Hibernation: requires swap partition
+Suspend: bug where bluetooth adapter blocks suspend (disable suspend on
+battery?) or: https://pobe.ga/posts/intel-9260-suspend/
+
+amdgpu driver
+
+tlp-radio wizard: for if you want to disable other network devices when others
+are connected
+
+chrony
+
+
