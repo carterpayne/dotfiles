@@ -1,0 +1,28 @@
+{
+  "coc.preferences.rootPatterns": ["package.json", ".vim", ".git", ".hg", ".projections.json"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "json",
+    "python",
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact"
+  ],
+  "coc.preferences.jumpCommand": "drop",
+  "prettier.eslintIntegration": true,
+  "suggest.noselect": false,
+  "python.jediEnabled": false,
+  "python.formatting.enabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/home/carter/repos/loudcrowd/serverless/venv/bin/black",
+  "python.linting.pylintEnabled": false,
+  "python.linting.pep8Enabled": true,
+  "python.linting.pep8Path": "/home/carter/repos/loudcrowd/serverless/venv/bin/pycodestyle",
+  "tsserver.npm": "$HOME/.nvm/versions/node/v13.0.1/bin/npm",
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}

@@ -1,2 +1,2 @@
-xmodmap $HOME/.xmodmap
 exec i3
+setxkbmap -option caps:escape
