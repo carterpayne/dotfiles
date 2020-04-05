@@ -1,0 +1,6 @@
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias vimwiki='vim +VimwikiIndex'
+alias vim='nvim'
+alias util-open='ssh -fN util'
+alias util-check='ssh -O check util'
+alias util-close='ssh -O exit util'
