@@ -171,3 +171,5 @@ if has('nvim')
 
   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 endif
+
+let g:startify_change_to_dir = 0

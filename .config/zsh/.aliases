@@ -1,6 +1,9 @@
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias pkglist="rm $HOME/pkglist.txt && yay -Qee | awk '{print \$1}' > pkglist.txt"
 alias vimwiki='vim +VimwikiIndex'
 alias vim='nvim'
 alias util-open='ssh -fN util'
 alias util-check='ssh -O check util'
 alias util-close='ssh -O exit util'
+alias push-repos='rsync -aP --exclude-from=$HOME/repos/loudcrowd/exclude-files.txt -e "ssh -p 2222" $HOME/repos/loudcrowd/ carter@192.168.0.179:/share/loudcrowd'
+alias pull-repos='rsync -aP --exclude-from=$HOME/repos/loudcrowd/exclude-files.txt -e "ssh -p 2222" carter@192.168.0.179:/share/loudcrowd $HOME/repos/'
