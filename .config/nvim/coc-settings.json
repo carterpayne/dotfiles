@@ -1,5 +1,11 @@
 {
-  "coc.preferences.rootPatterns": ["package.json", ".vim", ".git", ".hg", ".projections.json"],
+  "coc.preferences.rootPatterns": [
+    "package.json",
+    ".vim",
+    ".git",
+    ".hg",
+    ".projections.json"
+  ],
   "coc.preferences.formatOnSaveFiletypes": [
     "json",
     "python",
@@ -11,18 +17,16 @@
   "coc.preferences.jumpCommand": "drop",
   "prettier.eslintIntegration": true,
   "suggest.noselect": false,
-  "python.venvPath": "~/.local/share/venvs",
-  "python.jediEnabled": false,
   "python.formatting.enabled": true,
   "python.formatting.provider": "black",
-  "python.linting.pylintEnabled": false,
   "python.linting.pep8Enabled": true,
   "python.linting.pep8Path": "pycodestyle",
-  "tsserver.npm": "$HOME/.nvm/versions/node/v13.0.1/bin/npm",
+  "tsserver.npm": "$HOME/.nvm/versions/node/v14.15.4/bin/npm",
   "eslint.filetypes": [
     "javascript",
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "files.insertFinalNewline": false
 }

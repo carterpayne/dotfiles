@@ -58,8 +58,6 @@ polybar
 postgresql
 pulseaudio
 python-pywal
-python-virtualenv
-python-virtualenvwrapper
 python37
 redshift
 ripgrep
