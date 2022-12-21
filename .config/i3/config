@@ -66,7 +66,7 @@ bindsym $mod+d exec rofi -show run
 bindsym $mod+b exec firefox-developer-edition
 
 # start gaming
-bindsym $mod+g exec steam-native
+bindsym $mod+g exec steam
 
 # change focus
 bindsym $mod+h focus left
@@ -181,5 +181,5 @@ exec_always --no-startup-id wal --theme one-half-dark -n
 exec_always --no-startup-id picom --config $HOME/.config/picom/picom.config
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id redshift
-exec --no-startup-id /usr/bin/light-locker
+#exec --no-startup-id /usr/bin/light-locker
 
